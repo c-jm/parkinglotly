@@ -13,7 +13,9 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+// @
+
+$factory->define(App\Models\User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -22,7 +24,7 @@ $factory->define(App\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\ParkingLot::class, function(Faker $faker) {
+$factory->define(App\Models\ParkingLot::class, function(Faker $faker) {
     return [
         'name' => $faker->company,
         'capacity' => 50
