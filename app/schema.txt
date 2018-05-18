@@ -1,0 +1,5 @@
+
+
+Ideas:
+
+* A parking lot is a resource which means in our case that the API will have to specify the parkinglot itself too.

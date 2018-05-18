@@ -2,6 +2,9 @@
 
 use Faker\Generator as Faker;
 
+use App\Models\Ticket;
+use App\Models\ParkngLot;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -24,9 +27,18 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Models\ParkingLot::class, function(Faker $faker) {
+$factory->define(\App\Models\ParkingLot::class, function(Faker $faker) {
     return [
         'name' => $faker->company,
+        'current_ticket_count' => 0,
         'capacity' => 50
+    ];
+});
+
+$factory->define(\App\Models\Ticket::class, function(Faker $faker) {
+    return [
+        'paid_status' => Ticket::PAID,
+        'current_level' => '1hr',
+        'owing' => Ticket::LEVELS['1hr']
     ];
 });

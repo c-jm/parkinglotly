@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateParkingLotsTable extends Migration
+class CreateTicketsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateParkingLotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('parking_lots', function (Blueprint $table) {
+        Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('capacity');
-            $table->integer('current_ticket_count');
+            $table->string('paid_status');
+            $table->string('current_level');
+            $table->float('owing');
+            $table->unsignedInteger('parking_lot_id');
+            $table->foreign('parking_lot_id')->references('id')->on('parking_lots');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateParkingLotsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('parking_lots');
+        Schema::dropIfExists('tickets');
     }
 }
