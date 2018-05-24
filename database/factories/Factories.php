@@ -39,6 +39,6 @@ $factory->define(\App\Models\Ticket::class, function(Faker $faker) {
     return [
         'paid_status' => Ticket::PAID,
         'current_level' => '1hr',
-        'owing' => Ticket::LEVELS['1hr']
+        'owing' => Ticket::getLevel('1hr')['owing']
     ];
 });

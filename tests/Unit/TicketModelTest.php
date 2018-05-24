@@ -8,20 +8,22 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use App\Models\ParkingLot;
 use App\Models\Ticket;
+use \Carbon\Carbon;
 
 class TicketModelTest extends TestCase
 {
-
-    public function test_that_a_ticket_can_be_adjusted_correctly()
+    public function test_that_a_ticket_returns_correct_level_for_payment()
     {
-        $parking = factory(ParkingLot::class)->create();
-        $ticket = factory(Ticket::class)->create(['parking_lot_id' => $parking->id]);
-        $this->assertEquals(3, $ticket->owing);
+        $ticket = factory(Ticket::class)->make(['created_at' => Carbon::now()->addHours(0.2)]);        
+        $this->assertEquals(Ticket::getLevel('1hr'), $ticket->owingLevel);
 
-        $ticket->adjustTicketLevel('3hr');
-        $ticket = $ticket->fresh();
-        
-        $this->assertEquals(4.5, $ticket->owing);
-        $this->assertEquals('3hr', $ticket->current_level);   
+        $ticket = factory(Ticket::class)->make(['created_at' => Carbon::now()->addHours(2)]);
+        $this->assertEquals(Ticket::getLevel('3hr'), $ticket->owingLevel);
+
+        $ticket = factory(Ticket::class)->make(['created_at' => Carbon::now()->addHours(6)]);
+        $this->assertEquals(Ticket::getLevel('6hr'), $ticket->owingLevel);
+
+        $ticket = factory(Ticket::class)->make(['created_at' => Carbon::now()->addHours(7)]);
+        $this->assertEquals(Ticket::getLevel('ALL_DAY'), $ticket->owingLevel);
     }
 }
