@@ -13,21 +13,19 @@ class Ticket extends Model
     const PAID = 'PAID';
     const NOT_PAID = 'NOT PAID';
 
-
-    const LEVELS = [
-        ['key' => '1hr', 'owing' => 3.00],
-        ['key' => '3hr', 'owing' => 4.50],
-        ['key' => '6hr', 'owing' => 6.70],
-        ['key' => 'ALL_DAY', 'owing' => 10.00]
-    ];
-
-
-    public static function getLevel($key) 
+    
+    public function getOwingLevelAttribute()
     {
-        return collect(static::LEVELS)->firstWhere('key', $key);
+        return OwingLevel::get($this->currentTicketTimeLevelKey());
     }
 
-    private function currentTicketTimeDifference()
+    public function getOwingMessageAttribute()
+    {
+        return sprintf("Ticket owes: $%.2f for timespan of: %s", $this->owingLevel['owing'], $this->owingLevel['key']);
+    }
+    
+
+    private function currentTicketTimeLevelKey()
     {
         $now = Carbon::now();
         $diff = $now->diffInHours($this->created_at);
@@ -47,25 +45,4 @@ class Ticket extends Model
         return 'ALL_DAY';
     } 
 
-    public function getOwingLevelAttribute()
-    {
-        $key = $this->currentTicketTimeDifference();
-
-        return static::getLevel($key);
-    }
-
-    public function owes()
-    {
-        $owingLevel = $this->owingLevel;
-
-        return sprintf("Ticket owes: $%.2f for timespan of: %s", $owingLevel['owing'], $owingLevel['key']);
-    }
- 
-    public function adjustTicketLevel($newLevel)
-    {
-        $this->fill([
-            'current_level' => $newLevel,
-            'owing' => self::LEVELS[$newLevel]
-        ]);
-    }
 }

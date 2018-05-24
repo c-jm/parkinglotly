@@ -19,6 +19,6 @@ class TicketsController extends Controller
 
     public function show(ParkingLot $lot, Ticket $ticket) 
     {
-        return response()->json(['message' => $ticket->owes()]);
+        return response()->json(['message' => $ticket->owingMessage], 200);
     }
 }

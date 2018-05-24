@@ -2,6 +2,8 @@
 
 use Faker\Generator as Faker;
 
+use App\Models\OwingLevel;
+
 use App\Models\Ticket;
 use App\Models\ParkngLot;
 
@@ -39,6 +41,6 @@ $factory->define(\App\Models\Ticket::class, function(Faker $faker) {
     return [
         'paid_status' => Ticket::PAID,
         'current_level' => '1hr',
-        'owing' => Ticket::getLevel('1hr')['owing']
+        'owing' => OwingLevel::get('1hr')['owing']
     ];
 });
