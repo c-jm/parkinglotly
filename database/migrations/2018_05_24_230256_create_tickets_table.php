@@ -17,10 +17,12 @@ class CreateTicketsTable extends Migration
             $table->increments('id');
 
             $table->unsignedInteger('parking_lot_id');
-            $table->unsignedInteger('payment_id');
+            $table->unsignedInteger('payment_id')->nullable();
+            $table->unsignedInteger('user_id');
+
             $table->foreign('parking_lot_id')->references('id')->on('parking_lots');
-            $table->foreign('payment_id')->references('id')->on('payment');
-            
+            $table->foreign('payment_id')->references('id')->on('payments');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

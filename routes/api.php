@@ -15,8 +15,7 @@ use Illuminate\Http\Request;
 
 
 Route::post('lots/{lot}/tickets', 'TicketsController@create');
-Route::get('lots/{lot}/tickets/{ticket}', 'TicketsController@show');
+Route::get('lots/{lot}/tickets/{ticketId}', 'TicketsController@show');
 
 Route::post('lots/{lot}/payments/{ticket}', function() {
-    dd("NOT IMPLEMENTED");
 });

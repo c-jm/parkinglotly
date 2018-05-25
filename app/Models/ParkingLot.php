@@ -27,17 +27,13 @@ class ParkingLot extends Model
     }
 
 
-    public function newTicket()
+    public function newTicket($userId)
     {
         if ($this->isFull) {
             throw new \App\Exceptions\ParkingLotFullException('The parking lot is full!');
         }
 
-        
-        $ticket = $this->tickets()->make(['paid_status' => 'UNPAID']);
-        
-        $ticket->adjustTicketLevel('1hr');        
-        $this->tickets()->save($ticket);
+        $ticket = $this->tickets()->create(['parking_lot_id' => $this->id, 'user_id' => $userId]);
         $this->increment('current_ticket_count');
 
         return $ticket;

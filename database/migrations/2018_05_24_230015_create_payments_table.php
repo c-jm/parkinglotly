@@ -18,9 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->string('name');
             $table->string('stay_length');
             $table->float('paid_amount');
-            $table->string('charge_id')
-            $table->unsignedInteger('ticket_id');
-            $table->foreign('ticket_id')->references('id')->on('tickets');
+            $table->string('charge_id');
             $table->timestamps();
         });
     }

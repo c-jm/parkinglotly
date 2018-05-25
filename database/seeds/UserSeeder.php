@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ParkingLotSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class ParkingLotSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\ParkingLot::class)->create(['capacity' => 10]);
+        factory(\App\Models\User::class)->create(); 
     }
-} 
+}
