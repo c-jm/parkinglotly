@@ -23,9 +23,13 @@ class ParkingLot extends Model
 
     public function getIsFullAttribute()
     {
-        return $this->current_ticket_count >=  $this->capacity;
+        return $this->tickets()->count() >=  $this->capacity;
     }
-
+    
+    public function removeTicket($ticketId) 
+    {
+        return $lot->tickets()->find($ticketId)->delete();
+    }
 
     public function newTicket($userId)
     {
@@ -33,9 +37,6 @@ class ParkingLot extends Model
             throw new \App\Exceptions\ParkingLotFullException('The parking lot is full!');
         }
 
-        $ticket = $this->tickets()->create(['parking_lot_id' => $this->id, 'user_id' => $userId]);
-        $this->increment('current_ticket_count');
-
-        return $ticket;
+        return $this->tickets()->create(['parking_lot_id' => $this->id, 'user_id' => $userId]);
     }
 }

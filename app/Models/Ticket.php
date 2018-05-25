@@ -10,9 +10,16 @@ class Ticket extends Model
 {
     protected $guarded = [];
 
-    const PAID = 'PAID';
-    const NOT_PAID = 'NOT PAID';
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class);
+    }
     
     public function getOwingLevelAttribute()
     {
@@ -23,7 +30,20 @@ class Ticket extends Model
     {
         return sprintf("Ticket owes: $%.2f for timespan of: %s", $this->owingLevel['owing'], $this->owingLevel['key']);
     }
-    
+
+    public function pay($chargeId)
+    {   
+        if ($this->payment) {
+            return null;
+        }
+
+        $owing = $this->owingLevel;
+
+        return $this->payment()->create(['name' => $this->user->name, 
+                                       'stay_length' => $this->owingLevel['key'], 
+                                       'paid_amount' => $this->owingLevel['owing'], 
+                                       'charge_id' => bcrypt($chargeId)]);
+    }
 
     private function currentTicketTimeLevelKey()
     {

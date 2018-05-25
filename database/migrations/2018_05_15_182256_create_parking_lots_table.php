@@ -17,7 +17,6 @@ class CreateParkingLotsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('capacity');
-            $table->integer('current_ticket_count');
             $table->timestamps();
         });
     }

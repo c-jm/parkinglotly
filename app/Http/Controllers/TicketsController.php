@@ -14,23 +14,22 @@ class TicketsController extends Controller
     public function create(ParkingLot $lot, Request $request)
     {
         $rules = [
-            'userId' => 'required|bail'
+            'user_id' => 'required|bail'
         ];
 
         $request->validate($rules);
         
-        $userId = $request->input('userId');
+        $userId = $request->input('user_id');
 
         // @NOTE(cjm): Use findOrFail here?
         $user = User::find($userId);
-
         if (! $user) {
             return response()->json(['error' => sprintf('No user found with id: %d', $userId)], 422);
         }
 
         $ticket = $lot->newTicket($userId);
 
-        return response()->json(['message' => sprintf("Your ticket number is: %d", 1)], 201);
+        return response()->json(['message' => sprintf("Your ticket number is: %d", $ticket->id)], 201);
     }
 
     public function show(ParkingLot $lot, $ticketId) 
