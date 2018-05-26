@@ -19,9 +19,9 @@ class TicketsControllerTest extends TestCase
         $user = factory(User::class)->create();
 
         $uri = sprintf("/api/lots/%d/tickets", $lot->id);
-        $response = $this->json('POST', $uri, ['userId' => $user->id ]);   
+        $response = $this->json('POST', $uri, ['user_id' => $user->id ]);   
 
-        $response->assertStatus(201)->assertJson(['message' => sprintf("Your ticket number is: %d", 1)]);
+        $response->assertStatus(201)->assertJson(['message' => sprintf("Your ticket number is: %d", $user->id)]);
     }
 
     public function test_that_when_tickets_create_endpoint_is_hit_with_non_existant_user_an_error_is_thrown()
@@ -29,8 +29,8 @@ class TicketsControllerTest extends TestCase
         $lot = factory(ParkingLot::class)->create();
 
         $uri = sprintf("/api/lots/%d/tickets", $lot->id);
-        $response = $this->json('POST', $uri, ['userId' => 1]);   
-
+        $response = $this->json('POST', $uri, ['user_id' => 1]);   
+        
         $response->assertStatus(422)->assertJson(['error' => sprintf("No user found with id: %d", 1)]);
     }
 
