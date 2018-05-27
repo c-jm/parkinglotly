@@ -13,4 +13,4 @@ class ParkingLotSeeder extends Seeder
     {
         factory(App\Models\ParkingLot::class)->create(['capacity' => 10]);
     }
-} 
+}

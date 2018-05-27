@@ -37,7 +37,7 @@ class ParkingLotTests extends TestCase
 
         $ticket = $parkingLot->newTicket($user->id);
 
-        $this->assertEquals($parkingLot->id, $ticket->parking_lot_id);    
+        $this->assertEquals($parkingLot->id, $ticket->parking_lot_id);
     }
     
     public function test_that_parking_lots_return_a_parking_lot_full_exception_when_full()

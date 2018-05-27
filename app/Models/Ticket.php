@@ -32,16 +32,16 @@ class Ticket extends Model
     }
 
     public function pay($chargeId)
-    {   
+    {
         if ($this->payment) {
             return null;
         }
 
         $owing = $this->owingLevel;
 
-        return $this->payment()->create(['name' => $this->user->name, 
-                                       'stay_length' => $this->owingLevel['key'], 
-                                       'paid_amount' => $this->owingLevel['owing'], 
+        return $this->payment()->create(['name' => $this->user->name,
+                                       'stay_length' => $this->owingLevel['key'],
+                                       'paid_amount' => $this->owingLevel['owing'],
                                        'charge_id' => bcrypt($chargeId)]);
     }
 
@@ -51,8 +51,8 @@ class Ticket extends Model
         $diff = $now->diffInHours($this->created_at);
 
         if ($diff <= 1) {
-            return '1hr';       
-        } 
+            return '1hr';
+        }
         
         if ($diff <= 3) {
             return '3hr';
@@ -63,6 +63,5 @@ class Ticket extends Model
         }
 
         return 'ALL_DAY';
-    } 
-
+    }
 }

@@ -11,7 +11,7 @@ class OwingLevel
         ['key' => 'ALL_DAY', 'owing' => 10.00]
     ];
 
-    public static function get($key) 
+    public static function get($key)
     {
         return collect(static::LEVELS)->firstWhere('key', $key);
     }

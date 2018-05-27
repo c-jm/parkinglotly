@@ -16,7 +16,7 @@ class TicketModelTest extends TestCase
 {
     public function test_that_a_ticket_returns_correct_level_for_payment()
     {
-        $ticket = factory(Ticket::class)->make(['created_at' => Carbon::now()->addHours(0.2)]);        
+        $ticket = factory(Ticket::class)->make(['created_at' => Carbon::now()->addHours(0.2)]);
         $this->assertEquals(OwingLevel::get('1hr'), $ticket->owingLevel);
 
         $ticket = factory(Ticket::class)->make(['created_at' => Carbon::now()->addHours(2)]);

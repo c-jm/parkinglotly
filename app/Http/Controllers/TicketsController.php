@@ -32,7 +32,7 @@ class TicketsController extends Controller
         return response()->json(['message' => sprintf("Your ticket number is: %d", $ticket->id)], 201);
     }
 
-    public function show(ParkingLot $lot, $ticketId) 
+    public function show(ParkingLot $lot, $ticketId)
     {
         if (! $ticket = $lot->tickets()->find($ticketId)) {
             return response()->json(['error' => sprintf("No ticket with id: %d in lot: %d", $lot->id, $ticketId)], 422);

@@ -29,14 +29,14 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(\App\Models\ParkingLot::class, function(Faker $faker) {
+$factory->define(\App\Models\ParkingLot::class, function (Faker $faker) {
     return [
         'name' => $faker->company,
         'capacity' => 50
     ];
 });
 
-$factory->define(\App\Models\Ticket::class, function(Faker $faker) {
+$factory->define(\App\Models\Ticket::class, function (Faker $faker) {
     return [
     ];
 });

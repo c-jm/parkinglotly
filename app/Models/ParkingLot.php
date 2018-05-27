@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class ParkingLot extends Model
-{    
+{
     protected $guarded = [];
     protected $table = 'parking_lots';
 
@@ -15,7 +15,7 @@ class ParkingLot extends Model
     {
         return $this->hasMany(Ticket::class);
     }
-    // Attributes 
+    // Attributes
     public function getIsEmptyAttribute()
     {
         return $this->capacity == 0;
@@ -26,7 +26,7 @@ class ParkingLot extends Model
         return $this->tickets()->count() >=  $this->capacity;
     }
     
-    public function removeTicket($ticketId) 
+    public function removeTicket($ticketId)
     {
         return $lot->tickets()->find($ticketId)->delete();
     }
