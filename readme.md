@@ -17,6 +17,4 @@ All tests are seperaete within the tests/ directory at the root of the applicati
 
 PHPUnit is installed into the application by using composer. The binary is located within the `./vendor/bin` directory. 
 
-To run the tests run the `phpunit` executable against the Feature or Unit tests respectively.
-
- 
+To run the tests run the `phpunit` executable against the Feature or Unit test directory respectively.
