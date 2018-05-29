@@ -13,6 +13,13 @@ use App\Models\User;
 class PaymentControllerTest extends TestCase
 {
     use RefreshDatabase;
+    private $testCreditCardNumber;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->testCreditCardNumber = '378282246310005';
+    }
 
     public function test_that_payments_can_be_created()
     {
@@ -22,7 +29,7 @@ class PaymentControllerTest extends TestCase
         $this->assertTrue($lot->isFull);
 
         $uri = sprintf('/api/lots/%d/payments/%d', $lot->id, $ticket->id);
-        $response = $this->json('POST', $uri, ['credit_card_number' => '378282246310005']);
+        $response = $this->json('POST', $uri, ['credit_card_number' => $this->testCreditCardNumber]);
 
         $ticket = $ticket->fresh();
         $lot = $lot->fresh();
@@ -45,5 +52,19 @@ class PaymentControllerTest extends TestCase
         $response = $this->json('POST', $uri, ['credit_card_number' => 'aaabbbcc']);
 
         $response->assertJson(['message' => 'The given data was invalid.', 'errors' => ['credit_card_number' => ['validation.credit_card.card_invalid']]]);
+    }
+
+    
+    public function test_that_if_a_ticket_has_a_payment_it_cant_be_paid_for_again()
+    {
+        $lot = factory(ParkingLot::class)->create();
+        $user = factory(User::class)->create();
+        $ticket = $lot->newTicket($user->id);
+        $ticket->pay('testing_charge_id');
+
+        $uri = sprintf('/api/lots/%d/payments/%d', $lot->id, $ticket->id);
+        $response = $this->json('POST', $uri, ['credit_card_number' => $this->testCreditCardNumber]);
+
+        $response->assertJson(['error' => sprintf("Ticket with id: %d in lot: %d has already been paid for", $ticket->id, $lot->id)]);
     }
 }
