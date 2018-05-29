@@ -32,7 +32,7 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
 $factory->define(\App\Models\ParkingLot::class, function (Faker $faker) {
     return [
         'name' => $faker->company,
-        'capacity' => 50
+        'capacity' => 2
     ];
 });
 

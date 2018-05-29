@@ -30,6 +30,7 @@ class Ticket extends Model
         return sprintf("Ticket owes: $%.2f for timespan of: %s", $this->owingLevel['owing'], $this->owingLevel['key']);
     }
 
+
     public function pay($chargeId)
     {
         if ($this->payment) {
@@ -42,8 +43,9 @@ class Ticket extends Model
                                        'stay_length' => $this->owingLevel['key'],
                                        'paid_amount' => $this->owingLevel['owing'],
                                        'charge_id' => bcrypt($chargeId)]);
-                                       
+
         $this->payment()->associate($payment);
+        $this->user()->dissociate();
         $this->save();
 
         return $payment;

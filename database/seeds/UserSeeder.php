@@ -11,6 +11,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Models\User::class)->create();
+        collect(range(1, 3))->each(function ($value) {
+            factory(\App\Models\User::class)->create();
+        });
     }
 }

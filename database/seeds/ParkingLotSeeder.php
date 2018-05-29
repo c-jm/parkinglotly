@@ -11,6 +11,6 @@ class ParkingLotSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\ParkingLot::class)->create(['capacity' => 10]);
+        factory(App\Models\ParkingLot::class)->create();
     }
 }

@@ -42,7 +42,7 @@ class PaymentControllerTest extends TestCase
         $this->assertTrue($ticket->payment->id == $payment['id']);
     }
 
-    public function test_that_payments_an_error_will_be_thrown_if_an_invalid_credit_card_is_provided()
+    public function test_that_an_error_will_be_thrown_if_an_invalid_credit_card_is_provided()
     {
         $lot = factory(ParkingLot::class)->create(['capacity' => 1]);
         $user = factory(User::class)->create();

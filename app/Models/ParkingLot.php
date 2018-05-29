@@ -16,22 +16,16 @@ class ParkingLot extends Model
         return $this->hasMany(Ticket::class);
     }
     // Attributes
-    public function getIsEmptyAttribute()
-    {
-        return $this->capacity == 0;
-    }
-
     public function getIsFullAttribute()
     {
         return $this->tickets()->whereNull('payment_id')->count() >=  $this->capacity;
     }
-    
+
     public function newTicket($userId)
     {
         if ($this->isFull) {
             throw new \App\Exceptions\ParkingLotFullException('The parking lot is full!');
-        }
-
-        return $this->tickets()->create(['parking_lot_id' => $this->id, 'user_id' => $userId]);
+        }        
+        return  $this->tickets()->create();
     }
 }
