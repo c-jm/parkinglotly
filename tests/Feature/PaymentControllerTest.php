@@ -26,6 +26,8 @@ class PaymentControllerTest extends TestCase
         $lot = factory(ParkingLot::class)->create(['capacity' => 1]);
         $user = factory(User::class)->create();
         $ticket = $lot->newTicket($user->id);
+        $user->assignTicket($ticket);
+
         $this->assertTrue($lot->isFull);
 
         $uri = sprintf('/api/lots/%d/payments/%d', $lot->id, $ticket->id);
@@ -33,9 +35,8 @@ class PaymentControllerTest extends TestCase
 
         $ticket = $ticket->fresh();
         $lot = $lot->fresh();
-
+        
         $this->assertFalse($lot->isFull);
-
         $payment = array_get(json_decode($response->getContent(), true), 'payment');
         
         $this->assertDatabaseHas('payments', $payment);
@@ -59,9 +60,12 @@ class PaymentControllerTest extends TestCase
     {
         $lot = factory(ParkingLot::class)->create();
         $user = factory(User::class)->create();
-        $ticket = $lot->newTicket($user->id);
-        $ticket->pay('testing_charge_id');
 
+        $ticket = $lot->newTicket($user->id);
+        $user->assignTicket($ticket);
+
+        $ticket->pay('testing_charge_id');
+        
         $uri = sprintf('/api/lots/%d/payments/%d', $lot->id, $ticket->id);
         $response = $this->json('POST', $uri, ['credit_card_number' => $this->testCreditCardNumber]);
 
