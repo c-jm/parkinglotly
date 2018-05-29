@@ -32,7 +32,7 @@ class TicketsController extends Controller
         }
 
         $ticket = $lot->newTicket($userId);
-        $user->ticket()->save($ticket);
+        $user->assignTicket($ticket);
 
         return response()->json(['message' => sprintf("Your ticket number is: %d", $ticket->id)], 201);
     }

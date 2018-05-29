@@ -25,7 +25,7 @@ class ParkingLot extends Model
     {
         if ($this->isFull) {
             throw new \App\Exceptions\ParkingLotFullException('The parking lot is full!');
-        }        
+        }
         return  $this->tickets()->create();
     }
 }

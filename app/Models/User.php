@@ -9,20 +9,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $guarded = [];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -30,5 +18,10 @@ class User extends Authenticatable
     public function ticket()
     {
         return $this->hasOne(Ticket::class);
+    }
+
+    public function assignTicket($ticket)
+    {
+        return $this->ticket()->save($ticket);
     }
 }
