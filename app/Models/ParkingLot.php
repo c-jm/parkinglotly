@@ -23,14 +23,9 @@ class ParkingLot extends Model
 
     public function getIsFullAttribute()
     {
-        return $this->tickets()->count() >=  $this->capacity;
+        return $this->tickets()->whereNull('payment_id')->count() >=  $this->capacity;
     }
     
-    public function removeTicket($ticketId)
-    {
-        return $lot->tickets()->find($ticketId)->delete();
-    }
-
     public function newTicket($userId)
     {
         if ($this->isFull) {

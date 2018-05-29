@@ -29,8 +29,6 @@ class PaymentsController extends Controller
             return response()->json(['error' => sprintf("Ticket with id: %d in lot: %d has already been paid for", $ticketId, $lot->id)]);
         }
 
-        $lot->removeTicket($ticket);
-        
         return response()->json(['payment' => $payment], 201);
     }
 }

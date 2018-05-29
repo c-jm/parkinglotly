@@ -10,7 +10,6 @@ class Ticket extends Model
 {
     protected $guarded = [];
 
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -39,10 +38,15 @@ class Ticket extends Model
 
         $owing = $this->owingLevel;
 
-        return $this->payment()->create(['name' => $this->user->name,
+        $payment = $this->payment()->create(['name' => $this->user->name,
                                        'stay_length' => $this->owingLevel['key'],
                                        'paid_amount' => $this->owingLevel['owing'],
                                        'charge_id' => bcrypt($chargeId)]);
+                                       
+        $this->payment()->associate($payment);
+        $this->save();
+
+        return $payment;
     }
 
     private function currentTicketTimeLevelKey()
