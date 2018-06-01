@@ -68,4 +68,52 @@ class PaymentControllerTest extends TestCase
 
         $response->assertJson(['error' => sprintf("Ticket with id: %d in lot: %d has already been paid for", $ticket->id, $lot->id)]);
     }
+
+    public function test_that_payments_charge_the_correct_amount_3hr()
+    {
+        $lot = factory(ParkingLot::class)->create();
+        $user = factory(User::class)->create();
+
+        $ticket = factory(Ticket::class)->create(['parking_lot_id' => $lot->id, 'user_id' => $user->id, 'created_at' => \Carbon\Carbon::now()->subHours(3)]);
+
+        $uri = sprintf('/api/lots/%d/payments/%d', $lot->id, $ticket->id);
+        $response = $this->json('POST', $uri, ['credit_card_number' => $this->testCreditCardNumber]);
+
+        $payment = array_get(json_decode($response->getContent(), true), 'payment');
+
+        $owingLevel = \App\Models\OwingLevel::get('3hr');
+        $this->assertArraySubset(['paid_amount' => $owingLevel['owing'], 'stay_length' => $owingLevel['key']], $payment);
+    }
+
+    public function test_that_payments_charge_the_correct_amount_6hr()
+    {
+        $lot = factory(ParkingLot::class)->create();
+        $user = factory(User::class)->create();
+
+        $ticket = factory(Ticket::class)->create(['parking_lot_id' => $lot->id, 'user_id' => $user->id, 'created_at' => \Carbon\Carbon::now()->subHours(5)]);
+
+        $uri = sprintf('/api/lots/%d/payments/%d', $lot->id, $ticket->id);
+        $response = $this->json('POST', $uri, ['credit_card_number' => $this->testCreditCardNumber]);
+
+        $payment = array_get(json_decode($response->getContent(), true), 'payment');
+
+        $owingLevel = \App\Models\OwingLevel::get('6hr');
+        $this->assertArraySubset(['paid_amount' => $owingLevel['owing'], 'stay_length' => $owingLevel['key']], $payment);
+    }
+
+    public function test_that_payments_charge_the_correct_amount_all_day()
+    {
+        $lot = factory(ParkingLot::class)->create();
+        $user = factory(User::class)->create();
+
+        $ticket = factory(Ticket::class)->create(['parking_lot_id' => $lot->id, 'user_id' => $user->id, 'created_at' => \Carbon\Carbon::now()->subHours(10)]);
+
+        $uri = sprintf('/api/lots/%d/payments/%d', $lot->id, $ticket->id);
+        $response = $this->json('POST', $uri, ['credit_card_number' => $this->testCreditCardNumber]);
+
+        $payment = array_get(json_decode($response->getContent(), true), 'payment');
+
+        $owingLevel = \App\Models\OwingLevel::get('ALL_DAY');
+        $this->assertArraySubset(['paid_amount' => $owingLevel['owing'], 'stay_length' => $owingLevel['key']], $payment);
+    }
 }
