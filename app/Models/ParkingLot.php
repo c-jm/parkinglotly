@@ -21,12 +21,15 @@ class ParkingLot extends Model
         return $this->tickets()->whereNull('payment_id')->count() >=  $this->capacity;
     }
 
-    public function newTicket()
+    public function newTicket($user)
     {
         if ($this->isFull) {
             throw new \App\Exceptions\ParkingLotFullException('The parking lot is full!');
         }
 
-        return  $this->tickets()->create();
+        $ticket = $this->tickets()->create();
+        $user->assignTicket($ticket);
+
+        return $ticket;
     }
 }

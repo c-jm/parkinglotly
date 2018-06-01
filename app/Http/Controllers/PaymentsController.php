@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class PaymentsController extends Controller
 {
-    public function create(Request $request, ParkingLot $lot, $ticketId)
+    public function store(Request $request, ParkingLot $lot, $ticketId)
     {
         $rules = [
             'credit_card_number' => ['required', new CardNumber]

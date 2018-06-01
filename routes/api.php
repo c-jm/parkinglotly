@@ -14,9 +14,9 @@ use Illuminate\Http\Request;
 */
 
 
-Route::post('lots/{lot}/tickets', 'TicketsController@create');
+Route::post('lots/{lot}/tickets', 'TicketsController@store');
 Route::get('lots/{lot}/tickets/{ticketId}', 'TicketsController@show');
 
-Route::post('/leave');
+Route::post('/leave', 'LeaveController@leave');
 
-Route::post('lots/{lot}/payments/{ticketId}', 'PaymentsController@create');
+Route::post('lots/{lot}/payments/{ticketId}', 'PaymentsController@store');

@@ -17,7 +17,7 @@ class TicketsControllerTest extends TestCase
         $user = factory(User::class)->create();
 
         $uri = sprintf("/api/lots/%d/tickets", $lot->id);
-        $response = $this->json('POST', $uri, ['user_id' => $user->id ]);
+        $response = $this->json('POST', $uri, ['user_id' => $user->id]);
 
         $response->assertStatus(201)->assertJson(['message' => sprintf("Your ticket number is: %d", $user->id)]);
     }
@@ -36,7 +36,7 @@ class TicketsControllerTest extends TestCase
     {
         $lot = factory(ParkingLot::class)->create();
         $user = factory(User::class)->create();
-        $ticket = $lot->newTicket($user->id);
+        $ticket = $lot->newTicket($user);
 
         $uri = sprintf('/api/lots/%d/tickets/%d', $lot->id, $ticket->id);
         $response = $this->json('GET', $uri);

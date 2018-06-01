@@ -25,8 +25,7 @@ class PaymentControllerTest extends TestCase
     {
         $lot = factory(ParkingLot::class)->create(['capacity' => 1]);
         $user = factory(User::class)->create();
-        $ticket = $lot->newTicket($user->id);
-        $user->assignTicket($ticket);
+        $ticket = $lot->newTicket($user);
 
         $this->assertTrue($lot->isFull);
 
@@ -47,7 +46,7 @@ class PaymentControllerTest extends TestCase
     {
         $lot = factory(ParkingLot::class)->create(['capacity' => 1]);
         $user = factory(User::class)->create();
-        $ticket = $lot->newTicket($user->id);
+        $ticket = $lot->newTicket($user);
 
         $uri = sprintf('/api/lots/%d/payments/%d', $lot->id, $ticket->id);
         $response = $this->json('POST', $uri, ['credit_card_number' => 'aaabbbcc']);
@@ -61,8 +60,7 @@ class PaymentControllerTest extends TestCase
         $lot = factory(ParkingLot::class)->create();
         $user = factory(User::class)->create();
 
-        $ticket = $lot->newTicket($user->id);
-        $user->assignTicket($ticket);
+        $ticket = $lot->newTicket($user);
         $ticket->pay('testing_charge_id');
         
         $uri = sprintf('/api/lots/%d/payments/%d', $lot->id, $ticket->id);

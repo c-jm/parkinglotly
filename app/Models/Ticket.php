@@ -41,7 +41,6 @@ class Ticket extends Model
                                        'paid_amount' => $this->owingLevel['owing'],
                                        'charge_id' => bcrypt($chargeId)]);
         $this->assignPayment($payment);
-        $this->removeUser();
 
         return $payment;
     }
@@ -74,7 +73,7 @@ class Ticket extends Model
         return $this->save();
     }
     
-    private function removeUser()
+    public function removeUser()
     {
         $this->user()->dissociate();
         

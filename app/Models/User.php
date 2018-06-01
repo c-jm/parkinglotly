@@ -24,4 +24,9 @@ class User extends Authenticatable
     {
         return $this->ticket()->save($ticket);
     }
+
+    public function disassociateTicket()
+    {
+        return $this->ticket()->delete();
+    }
 }

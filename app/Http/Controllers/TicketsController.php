@@ -10,14 +10,14 @@ use Illuminate\Http\Request;
 
 class TicketsController extends Controller
 {
-    public function create(ParkingLot $lot, Request $request)
+    public function store(ParkingLot $lot, Request $request)
     {
         $rules = [
             'user_id' => 'required'
         ];
 
         $request->validate($rules);
-        
+
         $userId = $request->input('user_id');
 
         $user = User::find($userId);
@@ -29,8 +29,7 @@ class TicketsController extends Controller
             return response()->json(['error' => sprintf("User already has ticket with number: %d", $user->ticket->id)]);
         }
 
-        $ticket = $lot->newTicket();
-        $user->assignTicket($ticket);
+        $ticket = $lot->newTicket($user);
 
         return response()->json(['message' => sprintf("Your ticket number is: %d", $ticket->id)], 201);
     }

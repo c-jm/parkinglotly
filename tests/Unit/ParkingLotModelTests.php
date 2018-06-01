@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\Models\User;
 use App\Models\ParkingLot;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -20,19 +21,21 @@ class ParkingLotTests extends TestCase
     public function test_that_parking_lots_return_full_appropriately_when_over_capacity()
     {
         $lot = factory(ParkingLot::class)->create(['capacity' => 1]);
+        $user = factory(User::class)->create();
 
-        $lot->newTicket();
+        $lot->newTicket($user);
 
         $this->assertTrue($lot->isFull);
     }
 
     public function test_that_parking_lots_issue_tickets_when_space_is_available()
     {
-        $parkingLot = factory(ParkingLot::class)->create(['capacity' => 10]);
+        $lot = factory(ParkingLot::class)->create(['capacity' => 10]);
+        $user = factory(User::class)->create();
 
-        $ticket = $parkingLot->newTicket();
+        $ticket = $lot->newTicket($user);
 
-        $this->assertEquals($parkingLot->id, $ticket->parking_lot_id);
+        $this->assertEquals($lot->id, $ticket->parking_lot_id);
         $this->assertDatabaseHas('tickets', $ticket->getAttributes());
     }
     
@@ -41,6 +44,8 @@ class ParkingLotTests extends TestCase
         $this->expectException(\App\Exceptions\ParkingLotFullException::class);
 
         $lot = factory(ParkingLot::class)->create(['capacity' => 0]);
-        $lot->newTicket();
+        $user = factory(User::class)->create();
+
+        $lot->newTicket($user);
     }
 }
