@@ -3,11 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-use \App\Models\ParkingLot;
 use \App\Models\User;
+use \App\Models\ParkingLot;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TicketsControllerTest extends TestCase
 {
@@ -34,7 +32,7 @@ class TicketsControllerTest extends TestCase
         $response->assertStatus(422)->assertJson(['error' => sprintf("No user found with id: %d", 1)]);
     }
 
-    public function test_that_when_tickets_show_endpoint_is_hit_a_ticket_is_shown()
+    public function test_that_a_ticket_can_be_shown()
     {
         $lot = factory(ParkingLot::class)->create();
         $user = factory(User::class)->create();

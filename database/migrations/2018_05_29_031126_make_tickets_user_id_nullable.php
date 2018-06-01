@@ -17,13 +17,4 @@ class MakeTicketsUserIdNullable extends Migration
             $table->unsignedInteger('user_id')->nullable(true)->change();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-    }
 }

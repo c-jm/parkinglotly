@@ -36,8 +36,6 @@ class Ticket extends Model
             return null;
         }
 
-        $owing = $this->owingLevel;
-
         $payment = $this->payment()->create(['name' => $this->user->name,
                                        'stay_length' => $this->owingLevel['key'],
                                        'paid_amount' => $this->owingLevel['owing'],

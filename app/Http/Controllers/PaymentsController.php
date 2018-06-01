@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ticket;
 use App\Models\ParkingLot;
 use \LVR\CreditCard\CardNumber;
 use Illuminate\Http\Request;

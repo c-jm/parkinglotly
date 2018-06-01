@@ -36,7 +36,7 @@ $factory->define(\App\Models\ParkingLot::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(\App\Models\Ticket::class, function (Faker $faker) {
+$factory->define(\App\Models\Ticket::class, function () {
     return [
     ];
 });

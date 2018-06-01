@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Ticket;
 use App\Models\ParkingLot;
 
 
@@ -21,7 +20,6 @@ class TicketsController extends Controller
         
         $userId = $request->input('user_id');
 
-        // @NOTE(cjm): Use findOrFail here?
         $user = User::find($userId);
         if (! $user) {
             return response()->json(['error' => sprintf('No user found with id: %d', $userId)], 422);
@@ -31,7 +29,7 @@ class TicketsController extends Controller
             return response()->json(['error' => sprintf("User already has ticket with number: %d", $user->ticket->id)]);
         }
 
-        $ticket = $lot->newTicket($userId);
+        $ticket = $lot->newTicket();
         $user->assignTicket($ticket);
 
         return response()->json(['message' => sprintf("Your ticket number is: %d", $ticket->id)], 201);
@@ -39,7 +37,8 @@ class TicketsController extends Controller
 
     public function show(ParkingLot $lot, $ticketId)
     {
-        if (! $ticket = $lot->tickets()->find($ticketId)) {
+        $ticket = $lot->tickets()->find($ticketId);
+        if (! $ticket) {
             return response()->json(['error' => sprintf("No ticket with id: %d in lot: %d", $lot->id, $ticketId)], 422);
         }
 

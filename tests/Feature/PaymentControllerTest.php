@@ -35,7 +35,7 @@ class PaymentControllerTest extends TestCase
 
         $ticket = $ticket->fresh();
         $lot = $lot->fresh();
-        
+
         $this->assertFalse($lot->isFull);
         $payment = array_get(json_decode($response->getContent(), true), 'payment');
         
@@ -63,7 +63,6 @@ class PaymentControllerTest extends TestCase
 
         $ticket = $lot->newTicket($user->id);
         $user->assignTicket($ticket);
-
         $ticket->pay('testing_charge_id');
         
         $uri = sprintf('/api/lots/%d/payments/%d', $lot->id, $ticket->id);
