@@ -19,7 +19,7 @@ class TicketsControllerTest extends TestCase
         $uri = sprintf("/api/lots/%d/tickets", $lot->id);
         $response = $this->json('POST', $uri, ['user_id' => $user->id]);
 
-        $response->assertStatus(201)->assertJson(['message' => sprintf("Your ticket number is: %d", $user->id)]);
+        $response->assertStatus(201)->assertJson(['message' => sprintf("Your ticket number is: %d", 1)]);
     }
 
     public function test_that_when_tickets_create_endpoint_is_hit_with_non_existant_user_an_error_is_thrown()
