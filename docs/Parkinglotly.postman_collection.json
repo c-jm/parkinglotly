@@ -1,0 +1,132 @@
+{
+	"id": "ce8673ee-7391-fbd6-4775-ef2ef1955b99",
+	"name": "Parkinglotly",
+	"description": "",
+	"order": [
+		"8c6c8d56-bf27-1990-777c-fee6451adeeb",
+		"32ac8c2e-515e-59af-e3f9-b4d522ea1720",
+		"a544039e-9a83-3e66-8a18-14c2359f3e71",
+		"337211e1-e46c-8421-616c-37342e7695c7"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1527199554482,
+	"owner": 0,
+	"public": false,
+	"requests": [
+		{
+			"id": "32ac8c2e-515e-59af-e3f9-b4d522ea1720",
+			"headers": "",
+			"headerData": [],
+			"url": "parkinglotly.site/api/lots/1/tickets/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "ce8673ee-7391-fbd6-4775-ef2ef1955b99",
+			"data": null,
+			"dataMode": "params",
+			"name": "Get Ticket Information",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1527563070410,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "337211e1-e46c-8421-616c-37342e7695c7",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "parkinglotly.site/api/leave",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "ce8673ee-7391-fbd6-4775-ef2ef1955b99",
+			"data": [],
+			"dataMode": "raw",
+			"name": "Leave ParkingLot",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1527827904362,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"user_id\": 1\n}"
+		},
+		{
+			"id": "8c6c8d56-bf27-1990-777c-fee6451adeeb",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "parkinglotly.site/api/lots/1/tickets",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1527563026432,
+			"name": "Create Ticket",
+			"description": "",
+			"collectionId": "ce8673ee-7391-fbd6-4775-ef2ef1955b99",
+			"responses": [],
+			"rawModeData": "{\n\t\"user_id\": 1\n}"
+		},
+		{
+			"id": "a544039e-9a83-3e66-8a18-14c2359f3e71",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "parkinglotly.site/api/lots/1/payments/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "ce8673ee-7391-fbd6-4775-ef2ef1955b99",
+			"data": [],
+			"dataMode": "raw",
+			"name": "Create a payment for first ticket",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1527826587272,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"credit_card_number\": 5105105105105100\n}\n"
+		}
+	]
+}
